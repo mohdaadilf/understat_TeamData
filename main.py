@@ -1,56 +1,43 @@
 from Table_Data import *
-
-
-
-
+import os
 if __name__=='__main__':
-    # 4 Leagues, year 2019
-    teamPL = ["Arsenal", "Aston Villa", "Bournemouth", "Brighton", "Burnley", "Chelsea", "Crystal Palace", "Everton",
-              "Leicester", "Liverpool", "Manchester City", "Manchester United", "Newcastle United", "Norwich",
-              "Sheffield United", "Southampton", "Tottenham", "Watford", "West Ham", "Wolverhampton Wanderers"]
-    teamLL = ["Real Madrid", "Barcelona", "Atletico Madrid", "Sevilla", "Villarreal", "Real Sociedad", "Granada",
-              "Getafe",              "Valencia", "Osasuna", "Athletic Club", "Levante", "Real Valladolid", "Eibar",
-              "Real Betis", "Alaves","Celta Vigo","Leganes", "Mallorca", "Espanyol"]
-    teamSA = ["Juventus", "Napoli", "Atalanta", "Inter", "AC Milan", "Roma", "Torino", "Lazio", "Sampdoria", "Bologna",
-              "Sassuolo","SPAL 2013", "Parma Calcio 1913", "Cagliari", "Udinese", "Genoa", "Lecce", "Brescia",
-              "Fiorentina","Verona"]
-    teamB = ["Bayern Munich", "Borussia Dortmund", "RasenBallsport Leipzig", "Borussia M.Gladbach", "Bayer Leverkusen",
-             "Hoffenheim","Wolfsburg", "Freiburg", "Eintracht Frankfurt", "Hertha Berlin", "Union Berlin", "Schalke 04", "Mainz 05",
-             "FC Cologne","Augsburg", "Werder Bremen", "Fortuna Duesseldorf", "Paderborn"]
-
     # header for header of CSV file
     header = ("id,title,GW,xG,xGA,npxG,npxGA,att,def,att,def,deep,deep_allowed,GF,GA,xpts,wins,draws,loses,pts,npxGD\n")
-
-    #4 files for the 4 leagues
-    SA= open('TableSA.csv', "w")
+    year = input("Enter year:")
+    #4 files for the 4 leagues with accordance to year; files are saved in specific folder
+    path = os.getcwd()
+    while not os.path.exists(path + "\\CSV_Files"): #makes folder if not found before
+        os.mkdir(path + "\\CSV_Files")
+    csv_path = path + "\\CSV_Files"
+    SA= open(csv_path+'\\TableSA'+year+'.csv', "w")
     SA.write(header)
-    LL= open('TableLL.csv', "w")
+    LL= open(csv_path+'\\TableLL'+year+'.csv', "w")
     LL.write(header)
-    PL= open('TablePL.csv', "w")
+    PL= open(csv_path+'\\TablePL'+year+'.csv', "w")
     PL.write(header)
-    B = open('TableB.csv', "w")
+    B = open(csv_path+'\\TableB'+year+'.csv', "w")
     B.write(header)
-    tms= [teamB, teamLL, teamSA, teamPL]
+
+    loop = asyncio.get_event_loop()
+    tms= loop.run_until_complete(leagueteams(year)) #gets teams with respect to league
 
     for league in tms:  #for England, Spain and Italy leagues
-        for T in league: #TEAMS
+        for T in league: #T=TEAMS
             print(T) #output the team selected
-            print(league) #outputs the league selected. Should be in accordance with team selected,ie 'T'
+            print(league) #outputs the teams in selected league. Should be in accordance with team selected,ie 'T'
 
-            #to get data from leagues, args sent are team, league and file operand
-            loop = asyncio.get_event_loop()
             if league == teamPL:
                 w = PL
-                t=loop.run_until_complete(results(T,'epl',w))
+                t=loop.run_until_complete(results(T,'epl',w,year))
             elif league== teamLL:
                 w=LL
-                t = loop.run_until_complete(results(T, 'la liga',w))
+                t = loop.run_until_complete(results(T, 'la liga',w,year))
             elif league== teamSA:
                 w=SA
-                t = loop.run_until_complete(results(T, 'serie a',w))
+                t = loop.run_until_complete(results(T, 'serie a',w,year))
             elif league == teamB:
                 w = B
-                t = loop.run_until_complete(results(T, 'bundesliga', w))
+                t = loop.run_until_complete(results(T, 'bundesliga', w,year))
 
     #close the files!
     SA.close()

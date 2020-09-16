@@ -2,7 +2,32 @@ import asyncio
 import aiohttp
 from understat import Understat
 
-async def results(t_t_g,league,w): #t_t_g is team_to_get ie result , league is league and w is file mode
+teamPL =[]
+teamLL=[]
+teamSA=[]
+teamB=[]
+
+async def leagueteams(year):   #gets teams for given year
+    
+    leagues=["epl", "la liga","serie a","bundesliga"]
+    async with aiohttp.ClientSession() as session:
+        understat = Understat(session)
+        for league in leagues:
+            teams = await understat.get_teams(league,year)
+            t=teams
+            for i in t:
+                if league=='epl':
+                    teamPL.append(i['title'])
+                elif league=='la liga':
+                    teamLL.append(i['title'])
+                elif league=='serie a':
+                    teamSA.append(i['title'])
+                elif league=='bundesliga':
+                    teamB.append(i['title'])
+    tms= [teamB, teamLL, teamSA, teamPL]
+    return tms
+
+async def results(t_t_g,league,w,year): #t_t_g is team_to_get ie result , league is league and w is file mode
         # header array to get dict key for csv
         header_array = ["id", "title", "history", "xG", "xGA", "npxG", "npxGA", "ppda", "att", "def", "ppda_allowed", "att",
                     "def", "deep", "deep_allowed", "scored", "missed", "xpts", "wins", "draws", "loses", "pts", "npxGD"]
@@ -10,11 +35,7 @@ async def results(t_t_g,league,w): #t_t_g is team_to_get ie result , league is l
         async with aiohttp.ClientSession() as session:
             understat = Understat(session)
             #team=input("Enter team:")
-            teams = await understat.get_teams(
-            league, #league
-            2019, #year
-            title=t_t_g #team
-        )
+            teams = await understat.get_teams(league,year, title=t_t_g) #league, year and team
         t=teams
 
         for j in range(0, 1):  # outter dict L1
@@ -30,8 +51,8 @@ async def results(t_t_g,league,w): #t_t_g is team_to_get ie result , league is l
                             print(gw, end=",")
                             w.write(team+","+str(gw) + ",")#writes team and game week
                             for m in range(0, 20):  # L4 for attributes
+                                ha = header_array[3:23] #gw-to-npxGD headers
 
-                                ha = header_array[3:23] #gw to end headers
                                 if m == 4 or m == 7:  # ppda and ppda_allowed
                                     print(k[ha[m]][ha[m + 1]], end=",")  # att
                                     print(k[ha[m]][ha[m + 2]], end=",")  # def
@@ -41,11 +62,10 @@ async def results(t_t_g,league,w): #t_t_g is team_to_get ie result , league is l
                                 elif m == 5 or m == 6 or m == 8 or m == 9:  #ppda and ppda allowed
                                     continue  # att & def
 
-                                else:
-                                    print(k[ha[m]], end=",")  # all other attributes
+                                else: # all other attributes
+                                    print(k[ha[m]], end=",")
                                     w.write((str(k[ha[m]])) + ",")
                             print("\n")  # jumps to next line for next game
-
                             gw+=1 #increments game week var
                             if len(g)!=gw-1:
                                     w.write("\n,")
