@@ -1,4 +1,4 @@
-id,title,GW,xG,xGA,npxG,npxGA,att,def,att,def,deep,deep_allowed,scored,missed,xpts,wins,draws,loses,pts,npxGD
+id,title,GW,xG,xGA,npxG,npxGA,att,def,att,def,deep,deep_allowed,GF,GA,xpts,wins,draws,loses,pts,npxGD
 117,Bayern Munich,1,2.47707,1.18459,1.71929,1.18459,168,16,373,23,17,2,2,2,2.3576,0,1,0,1,0.5347,
 ,Bayern Munich,2,1.59729,1.08016,0.83951,1.08016,184,19,457,25,9,6,3,0,1.8269000000000002,1,0,0,3,-0.24065000000000003,
 ,Bayern Munich,3,3.34597,0.72047,3.34597,0.72047,166,31,407,20,8,2,6,1,2.8148,1,0,0,3,2.6254999999999997,

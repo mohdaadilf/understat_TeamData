@@ -3,7 +3,7 @@ import aiohttp
 from understat import Understat
 
 async def results(t_t_g,league,w): #t_t_g is team_to_get ie result , league is league and w is file mode
-        # header array to get dict key
+        # header array to get dict key for csv
         header_array = ["id", "title", "history", "xG", "xGA", "npxG", "npxGA", "ppda", "att", "def", "ppda_allowed", "att",
                     "def", "deep", "deep_allowed", "scored", "missed", "xpts", "wins", "draws", "loses", "pts", "npxGD"]
         global teams
@@ -50,5 +50,5 @@ async def results(t_t_g,league,w): #t_t_g is team_to_get ie result , league is l
                             if len(g)!=gw-1:
                                     w.write("\n,")
                             else:
-                                    w.write("\n\n")
+                                    w.write("\n\n\n")
         return teams

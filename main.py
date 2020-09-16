@@ -19,8 +19,7 @@ if __name__=='__main__':
              "FC Cologne","Augsburg", "Werder Bremen", "Fortuna Duesseldorf", "Paderborn"]
 
     # header for header of CSV file
-    header = (
-        "id,title,GW,xG,xGA,npxG,npxGA,att,def,att,def,deep,deep_allowed,scored,missed,xpts,wins,draws,loses,pts,npxGD\n")
+    header = ("id,title,GW,xG,xGA,npxG,npxGA,att,def,att,def,deep,deep_allowed,GF,GA,xpts,wins,draws,loses,pts,npxGD\n")
 
     #4 files for the 4 leagues
     SA= open('TableSA.csv', "w")

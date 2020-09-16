@@ -1,4 +1,4 @@
-id,title,GW,xG,xGA,npxG,npxGA,att,def,att,def,deep,deep_allowed,scored,missed,xpts,wins,draws,loses,pts,npxGD
+id,title,GW,xG,xGA,npxG,npxGA,att,def,att,def,deep,deep_allowed,GF,GA,xpts,wins,draws,loses,pts,npxGD
 98,Juventus,1,1.88829,0.264026,1.88829,0.264026,192,29,256,24,9,1,1,0,2.6292999999999997,1,0,0,3,1.6242640000000002,
 ,Juventus,2,2.0077,1.58762,2.0077,1.58762,321,22,261,27,7,5,4,3,1.7017,1,0,0,3,0.4200799999999998,
 ,Juventus,3,0.324648,1.47787,0.324648,1.47787,193,33,283,21,5,6,0,0,0.4265,0,1,0,1,-1.153222,

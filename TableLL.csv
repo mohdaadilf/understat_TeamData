@@ -1,4 +1,4 @@
-id,title,GW,xG,xGA,npxG,npxGA,att,def,att,def,deep,deep_allowed,scored,missed,xpts,wins,draws,loses,pts,npxGD
+id,title,GW,xG,xGA,npxG,npxGA,att,def,att,def,deep,deep_allowed,GF,GA,xpts,wins,draws,loses,pts,npxGD
 150,Real Madrid,1,1.99723,1.51166,1.99723,1.51166,324,23,216,19,8,5,3,1,1.7477,1,0,0,3,0.48557000000000006,
 ,Real Madrid,2,1.72798,1.22209,1.72798,1.22209,193,25,341,18,13,2,1,1,1.7207,0,1,0,1,0.5058900000000002,
 ,Real Madrid,3,1.76659,2.13825,1.76659,2.13825,265,31,348,19,7,4,2,2,1.0699,0,1,0,1,-0.3716600000000001,
