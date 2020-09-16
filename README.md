@@ -1,7 +1,7 @@
 # understat_TeamData
 
 This is an extention (sort of) to the understat package (refer to: https://understat.readthedocs.io/en/latest/ ). 
-The 2 files main.py and Table_Data.py are pretty self explanitory. 
+The 2 files main.py and Table_Data.py are pretty self explanitory.
 16/9/20:
 Program reads data(Bundesliga, LaLiga, Serie A and EPL for the year 2019) from understat, and saves them into a CSV file.
 Year can be changed but the 'team' list should also be updated. If the teams are changed according to the corresponding year, results for the said year should be written to the csv file(not tested).

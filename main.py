@@ -1,24 +1,27 @@
 from Table_Data import *
 
 
-#3 Leagues year 2019
-teamPL = ["Arsenal", "Aston Villa", "Bournemouth", "Brighton", "Burnley", "Chelsea", "Crystal Palace","Everton",
-          "Leicester", "Liverpool", "Manchester City", "Manchester United", "Newcastle United","Norwich",
-          "Sheffield United", "Southampton", "Tottenham", "Watford", "West Ham","Wolverhampton Wanderers"]
-teamLL=["Real Madrid","Barcelona", "Atletico Madrid", "Sevilla","Villarreal","Real Sociedad","Granada","Getafe",
-        "Valencia","Osasuna","Athletic Club","Levante","Real Valladolid","Eibar","Real Betis","Alaves","Celta Vigo",
-        "Leganes","Mallorca","Espanyol"]
-teamSA=["Juventus", "Napoli","Atalanta","Inter","AC Milan","Roma","Torino","Lazio","Sampdoria","Bologna","Sassuolo",
-        "SPAL 2013","Parma Calcio 1913","Cagliari", "Udinese","Genoa", "Lecce","Brescia","Fiorentina","Verona"]
-teamB=["Bayern Munich","Borussia Dortmund","RasenBallsport Leipzig", "Borussia M.Gladbach","Bayer Leverkusen","Hoffenheim",
-       "Wolfsburg","Freiburg","Eintracht Frankfurt","Hertha Berlin","Union Berlin","Schalke 04","Mainz 05","FC Cologne",
-       "Augsburg","Werder Bremen","Fortuna Duesseldorf","Paderborn"]
-
-#header for header of CSV file
-header = ("id,title,GW,xG,xGA,npxG,npxGA,att,def,att,def,deep,deep_allowed,scored,missed,xpts,wins,draws,loses,pts,npxGD\n")
 
 
 if __name__=='__main__':
+    # 4 Leagues, year 2019
+    teamPL = ["Arsenal", "Aston Villa", "Bournemouth", "Brighton", "Burnley", "Chelsea", "Crystal Palace", "Everton",
+              "Leicester", "Liverpool", "Manchester City", "Manchester United", "Newcastle United", "Norwich",
+              "Sheffield United", "Southampton", "Tottenham", "Watford", "West Ham", "Wolverhampton Wanderers"]
+    teamLL = ["Real Madrid", "Barcelona", "Atletico Madrid", "Sevilla", "Villarreal", "Real Sociedad", "Granada",
+              "Getafe",              "Valencia", "Osasuna", "Athletic Club", "Levante", "Real Valladolid", "Eibar",
+              "Real Betis", "Alaves","Celta Vigo","Leganes", "Mallorca", "Espanyol"]
+    teamSA = ["Juventus", "Napoli", "Atalanta", "Inter", "AC Milan", "Roma", "Torino", "Lazio", "Sampdoria", "Bologna",
+              "Sassuolo","SPAL 2013", "Parma Calcio 1913", "Cagliari", "Udinese", "Genoa", "Lecce", "Brescia",
+              "Fiorentina","Verona"]
+    teamB = ["Bayern Munich", "Borussia Dortmund", "RasenBallsport Leipzig", "Borussia M.Gladbach", "Bayer Leverkusen",
+             "Hoffenheim","Wolfsburg", "Freiburg", "Eintracht Frankfurt", "Hertha Berlin", "Union Berlin", "Schalke 04", "Mainz 05",
+             "FC Cologne","Augsburg", "Werder Bremen", "Fortuna Duesseldorf", "Paderborn"]
+
+    # header for header of CSV file
+    header = (
+        "id,title,GW,xG,xGA,npxG,npxGA,att,def,att,def,deep,deep_allowed,scored,missed,xpts,wins,draws,loses,pts,npxGD\n")
+
     #4 files for the 4 leagues
     SA= open('TableSA.csv', "w")
     SA.write(header)

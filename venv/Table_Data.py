@@ -1,14 +1,12 @@
 import asyncio
 import aiohttp
 from understat import Understat
-global teams
-
-#header array to get dict key
-header_array = ["id", "title", "history", "xG", "xGA", "npxG", "npxGA", "ppda", "att", "def","ppda_allowed", "att",
-                "def", "deep", "deep_allowed", "scored", "missed", "xpts", "wins","draws", "loses", "pts", "npxGD"]
-
 
 async def results(t_t_g,league,w): #t_t_g is team_to_get ie result , league is league and w is file mode
+        # header array to get dict key
+        header_array = ["id", "title", "history", "xG", "xGA", "npxG", "npxGA", "ppda", "att", "def", "ppda_allowed", "att",
+                    "def", "deep", "deep_allowed", "scored", "missed", "xpts", "wins", "draws", "loses", "pts", "npxGD"]
+        global teams
         async with aiohttp.ClientSession() as session:
             understat = Understat(session)
             #team=input("Enter team:")
