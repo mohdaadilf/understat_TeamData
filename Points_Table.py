@@ -6,8 +6,7 @@ import os
 def pointstable(year):
     path = os.getcwd()
     csv_path = path + "\\CSV_Files"
-    print(csv_path + '\\TableSA' + year + '.csv')
-
+    # Reading from league files to get team data's
     SA = open(csv_path + '\\TableSA' + year + '.csv', "r")
     readerSA = csv.reader(SA)
     LL = open(csv_path + '\\TableLL' + year + '.csv', "r")
@@ -16,30 +15,26 @@ def pointstable(year):
     readerPL = csv.reader(PL)
     B = open(csv_path + '\\TableB' + year + '.csv', "r")
     readerB = csv.reader(B)
+    readers = [readerB, readerLL, readerPL, readerSA]  # to read each file
 
-    while not os.path.exists(path + "\\CSV_Files"):  # makes folder if not found before
-        os.mkdir(path + "\\CSV_Files")
-    csv_path = path + "\\CSV_Files"
     # For Points Table!
     header = "title,xG,xGA,npxG,npxGA,p_att,p_def,op_att,op_def,deep,deep_allowed,GF,GA,GD,xpts,wins,draws,loses,pts,npxGD\n"
-    SA_T = open(csv_path + '\\SerieA' + year + '.csv', "r+")
+    SA_T = open(csv_path + '\\SerieA' + year + '.csv', "w")
     SA_T.write(header)
-    LL_T = open(csv_path + '\\LaLiga' + year + '.csv', "r+")
+    LL_T = open(csv_path + '\\LaLiga' + year + '.csv', "w")
     LL_T.write(header)
-    PL_T = open(csv_path + '\\EPL' + year + '.csv', "r+")
+    PL_T = open(csv_path + '\\EPL' + year + '.csv', "w")
     PL_T.write(header)
-    B_T = open(csv_path + '\\Bundesliga' + year + '.csv', "r+")
+    B_T = open(csv_path + '\\Bundesliga' + year + '.csv', "w")
     B_T.write(header)
 
-    readers = [readerB, readerLL, readerPL, readerSA]
-
     for rdr in readers:
-        xG = xGA = npxG = npxGA = p_att = p_def = pa_att = pa_def = deep = deep_allowed = GF = GA = xpts = wins = draws = loses = pts = npxGD = gd= 0
-        Values = next(rdr)
+        xG = xGA = npxG = npxGA = p_att = p_def = pa_att = pa_def = deep = deep_allowed = GF = GA = xpts = wins = draws = loses = pts = npxGD = gd = 0
+        Values = next(rdr)  # header
         print(Values)
         for row in rdr:
-            if not row:
-                if rdr == readerB:
+            if not row:  # this line doesn't execute at first. Program always (must and) will go to else condition
+                if rdr == readerB:  # for writing to respective league file
                     w = B_T
                 elif rdr == readerSA:
                     w = SA_T
@@ -47,12 +42,12 @@ def pointstable(year):
                     w = PL_T
                 elif rdr == readerLL:
                     w = LL_T
-
                 # calculating goal difference and writing all the elements/attributes
-                gd = GF-GA
+                gd = GF - GA
                 w.write(title + "," + (str(xG)) + "," + (str(xGA)) + "," + (str(npxG)) + "," + (str(npxGA)) + "," + (
                     str(p_att)) + "," + (str(p_def)) + "," + (str(pa_att)) + "," + (str(pa_def)) + "," + (
-                            str(deep)) + "," + (str(deep_allowed)) + "," + (str(GF)) + "," + (str(GA)) + "," + str(gd) + "," + (
+                            str(deep)) + "," + (str(deep_allowed)) + "," + (str(GF)) + "," + (str(GA)) + "," + str(
+                    gd) + "," + (
                             str(xpts)) + "," + (str(wins)) + "," + (str(draws)) + "," + (str(loses)) + "," + (
                             str(pts)) + "," + (str(npxGD)) + "\n")
                 xG = xGA = npxG = npxGA = p_att = p_def = pa_att = pa_def = deep = deep_allowed = GF = GA = xpts = wins = draws = loses = pts = npxGD = gd = 0
@@ -93,11 +88,10 @@ def pointstable(year):
     # sorting
     leagues = ["SerieA", "Bundesliga", "LaLiga", "EPL"]
     for league in leagues:
-        with open(csv_path + '\\' + league + year + '.csv', "r", newline='') as f_input:
-            csv_input = csv.DictReader(f_input)
+        with open(csv_path + '\\' + league + year + '.csv', "r", newline='') as f_input:  # reads unsorted file
+            csv_input = csv.DictReader(f_input)  # reads as dict reader so we can sort based on arg given in next line
             data = sorted(csv_input, key=lambda row: (row['pts'], row['GD']), reverse=True)
-            print("Data:", data[0])
-        with open(csv_path + '\\' + league + year + '.csv', 'w', newline='') as f_output:
+        with open(csv_path + '\\' + league + year + '.csv', 'w', newline='') as f_output:  # writes to same file
             csv_output = csv.DictWriter(f_output, fieldnames=csv_input.fieldnames)
             csv_output.writeheader()
             csv_output.writerows(data)

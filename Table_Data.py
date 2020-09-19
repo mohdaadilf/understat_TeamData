@@ -1,6 +1,7 @@
 import aiohttp
 from understat import Understat
 
+# Lists to get teams for the specified year
 teamPL = []
 teamLL = []
 teamSA = []
@@ -57,10 +58,8 @@ async def results(t_t_g, league, w, year):  # t_t_g is team_to_get ie result , l
                             print(k[ha[m]][ha[m + 2]], end=",")  # def
                             w.write((str(k[ha[m]][ha[m + 1]])) + ",")
                             w.write((str(k[ha[m]][ha[m + 2]])) + ",")
-
                         elif m == 5 or m == 6 or m == 8 or m == 9:  # ppda and ppda allowed
                             continue  # att & def
-
                         else:  # all other attributes
                             print(k[ha[m]], end=",")
                             w.write((str(k[ha[m]])) + ",")

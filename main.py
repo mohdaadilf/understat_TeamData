@@ -27,7 +27,7 @@ if __name__ == '__main__':
     loop = asyncio.get_event_loop()
     tms = loop.run_until_complete(leagueteams(year))  # gets teams with respect to league
 
-    for league in tms:  # for England, Spain and Italy leagues
+    for league in tms:  # for England, Spain and Italy leagues team data
         for T in league:  # T=TEAMS
             print(T)  # output the team selected
             print(league)  # outputs the teams in selected league. Should be in accordance with team selected,ie 'T'
@@ -51,4 +51,10 @@ if __name__ == '__main__':
     PL.close()
     B.close()
 
-    pointstable(year)
+    pointstable(year)  # for points table!
+
+# thank you stack overflow and the hundred of random strangers on the internet + google
+# also thank you to Amos, understat and Reddit without this wouldn't have happened
+
+# understat website https://understat.com/
+# documentation website https://understat.readthedocs.io/en/latest/
