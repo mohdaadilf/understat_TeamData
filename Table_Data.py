@@ -32,13 +32,13 @@ async def results(t_t_g, league, w, year):  # t_t_g is team_to_get ie result , l
     # header array to get dict key for csv
     header_array = ["id", "title", "history", "xG", "xGA", "npxG", "npxGA", "ppda", "att", "def", "ppda_allowed", "att",
                     "def", "deep", "deep_allowed", "scored", "missed", "xpts", "wins", "draws", "loses", "pts", "npxGD"]
-    global teams
+    global team
     async with aiohttp.ClientSession() as session:
         understat = Understat(session)
-        # team=input("Enter team:")
-        teams = await understat.get_teams(league, year, title=t_t_g)  # league, year and team
-    t = teams
+        team = await understat.get_teams(league, year, title=t_t_g)  # league, year and team
+    t = team
 
+    print("Team selected:", t[0][header_array[1]])  # output the team selected
     for j in range(0, 1):  # outer dict L1
         for i in range(0, 3):  # first 3 array elements (up to hist) L2
             if i < 1:  # history if
@@ -48,25 +48,35 @@ async def results(t_t_g, league, w, year):  # t_t_g is team_to_get ie result , l
             if i >= 2:  # history if (refer document website and check get_team function example to better understand)
                 gw = 1  # game week
                 g = t[0][header_array[i]]
-                for k in g:  # L3 for 38 games
-                    print(gw, end=",")
-                    w.write(team + "," + str(gw) + ",")  # writes team and game week
-                    for m in range(0, 20):  # L4 for attributes
-                        ha = header_array[3:23]  # gw-to-npxGD headers
-                        if m == 4 or m == 7:  # ppda and ppda_allowed
-                            print(k[ha[m]][ha[m + 1]], end=",")  # att
-                            print(k[ha[m]][ha[m + 2]], end=",")  # def
-                            w.write((str(k[ha[m]][ha[m + 1]])) + ",")
-                            w.write((str(k[ha[m]][ha[m + 2]])) + ",")
-                        elif m == 5 or m == 6 or m == 8 or m == 9:  # ppda and ppda allowed
-                            continue  # att & def
-                        else:  # all other attributes
-                            print(k[ha[m]], end=",")
-                            w.write((str(k[ha[m]])) + ",")
-                    print("\n")  # jumps to next line for next game
-                    gw += 1  # increments game week var
-                    if len(g) != gw - 1:
-                        w.write("\n,")
-                    else:
-                        w.write("\n\n")
-    return teams
+                '''
+                In certain cases, such as first game week of a new season, there will be no data inside the following
+                dictionary since no games are played. The following 'if' checks whether the dictionary is empty or not. 
+                If it is empty, else case is executed.
+                '''
+                res = not bool(g)
+                if not res:
+                    for k in g:  # L3 for 38 games
+                        print(gw, end=",")
+                        w.write(team + "," + str(gw) + ",")  # writes team and game week
+                        for m in range(0, 20):  # L4 for attributes
+                            ha = header_array[3:23]  # gw-to-npxGD headers
+                            if m == 4 or m == 7:  # ppda and ppda_allowed
+                                print(k[ha[m]][ha[m + 1]], end=",")  # att
+                                print(k[ha[m]][ha[m + 2]], end=",")  # def
+                                w.write((str(k[ha[m]][ha[m + 1]])) + ",")
+                                w.write((str(k[ha[m]][ha[m + 2]])) + ",")
+                            elif m == 5 or m == 6 or m == 8 or m == 9:  # ppda and ppda allowed
+                                continue  # att & def
+                            else:  # all other attributes
+                                print(k[ha[m]], end=",")
+                                w.write((str(k[ha[m]])) + ",")
+                        print("\n")  # jumps to next line for next game
+                        gw += 1  # increments game week var
+                        if len(g) != gw - 1:
+                            w.write("\n,")
+                        else:
+                            w.write("\n\n")
+
+                else:
+                    #  writes team name+ sets all other values to 0
+                    w.write(team + ",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,\n\n")  # writes team and game week

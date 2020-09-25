@@ -18,7 +18,7 @@ def pointstable(year):
     readers = [readerB, readerLL, readerPL, readerSA]  # to read each file
 
     # For Points Table!
-    header = "title,xG,xGA,npxG,npxGA,p_att,p_def,op_att,op_def,deep,deep_allowed,GF,GA,GD,xpts,wins,draws,loses,pts,npxGD\n"
+    header = "title,Played,xG,xGA,npxG,npxGA,p_att,p_def,op_att,op_def,deep,deep_allowed,GF,GA,GD,xpts,wins,draws,loses,pts,npxGD\n"
     SA_T = open(csv_path + '\\SerieA' + year + '.csv', "w")
     SA_T.write(header)
     LL_T = open(csv_path + '\\LaLiga' + year + '.csv', "w")
@@ -29,7 +29,7 @@ def pointstable(year):
     B_T.write(header)
 
     for rdr in readers:
-        xG = xGA = npxG = npxGA = p_att = p_def = pa_att = pa_def = deep = deep_allowed = GF = GA = xpts = wins = draws = loses = pts = npxGD = gd = 0
+        played = xG = xGA = npxG = npxGA = p_att = p_def = pa_att = pa_def = deep = deep_allowed = GF = GA = xpts = wins = draws = loses = pts = npxGD = gd = 0
         Values = next(rdr)  # header
         print(Values)
         for row in rdr:
@@ -44,7 +44,7 @@ def pointstable(year):
                     w = LL_T
                 # calculating goal difference and writing all the elements/attributes
                 gd = GF - GA
-                w.write(title + "," + (str(xG)) + "," + (str(xGA)) + "," + (str(npxG)) + "," + (str(npxGA)) + "," + (
+                w.write(title + "," + (str(played)) + " games" + "," + (str(xG)) + "," + (str(xGA)) + "," + (str(npxG)) + "," + (str(npxGA)) + "," + (
                     str(p_att)) + "," + (str(p_def)) + "," + (str(pa_att)) + "," + (str(pa_def)) + "," + (
                             str(deep)) + "," + (str(deep_allowed)) + "," + (str(GF)) + "," + (str(GA)) + "," + str(
                     gd) + "," + (
@@ -55,11 +55,12 @@ def pointstable(year):
             else:
                 print(row)
                 title = row[1]
+                played = int(row[2])
                 xG += float(row[3])
                 xGA += float(row[4])
                 npxG += float(row[5])
                 npxga = (row[6])
-                npxga = npxga.strip()  # written to avoid some anomalies
+                npxga = npxga.strip()  # written to avoid some anomalies, remove/fix at your own risk
                 npxGA += float(npxga)
                 p_att += int(row[7])
                 p_def += int(row[8])
@@ -90,7 +91,7 @@ def pointstable(year):
     for league in leagues:
         with open(csv_path + '\\' + league + year + '.csv', "r", newline='') as f_input:  # reads unsorted file
             csv_input = csv.DictReader(f_input)  # reads as dict reader so we can sort based on arg given in next line
-            data = sorted(csv_input, key=lambda row: (row['pts'], row['GD']), reverse=True)
+            data = sorted(csv_input, key=lambda row: (row['pts'], row['GD'], row['GF']), reverse=True)
         with open(csv_path + '\\' + league + year + '.csv', 'w', newline='') as f_output:  # writes to same file
             csv_output = csv.DictWriter(f_output, fieldnames=csv_input.fieldnames)
             csv_output.writeheader()

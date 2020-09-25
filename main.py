@@ -10,11 +10,10 @@ if __name__ == '__main__':
 
     # 4 files for the 4 leagues with accordance to year; files are saved in specific folder
     path = os.getcwd()
-
     while not os.path.exists(path + "\\CSV_Files"):  # makes folder if not found before
         os.mkdir(path + "\\CSV_Files")
     csv_path = path + "\\CSV_Files"
-    print(csv_path)
+    print("Files will be saved to path: " + csv_path)
     SA = open(csv_path + '\\TableSA' + year + '.csv', "w")
     SA.write(header)
     LL = open(csv_path + '\\TableLL' + year + '.csv', "w")
@@ -29,8 +28,8 @@ if __name__ == '__main__':
 
     for league in tms:  # for England, Spain and Italy leagues team data
         for T in league:  # T=TEAMS
-            print(T)  # output the team selected
-            print(league)  # outputs the teams in selected league. Should be in accordance with team selected,ie 'T'
+            print("Teams in the league:", league)  # outputs the teams in selected league. Should be in accordance with
+            # team selected,ie 'T'
 
             if league == teamPL:
                 w = PL
